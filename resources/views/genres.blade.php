@@ -9,10 +9,10 @@
     <h1>Hello World</h1>
     <p>Selamat Datang di toko BOOKSALES</p>
 
-    @foreach ($genres as $item)
+    @foreach ($genres as $genre)
         <ul>
-            <li>ID: {{ $item['id'] }}</li>
-            <li>Nama: {{ $item['name'] }}</li>
+            <li>{{$genre['name']}}</li>
+            <li>{{ $genre['description'] }}</li>
         </ul>
     @endforeach
 </body>

@@ -2,21 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selamat Datang</title>
+    <title>Books</title>
 </head>
 <body>
     <h1>Hello World</h1>
     <p>Selamat Datang di toko BOOKSALES</p>
 
-    @foreach ($books as $item )
+    @foreach ($books as $book)
         <ul>
-            <li>{{$item['title']}}</li>
-            <li>{{$item['description']}}</li>
-            <li>{{$item['stock']}}</li>
-            <li>{{$item['price']}}</li>
-        </ul>        
+            <li>{{ $book->title }}</li>
+            <li>{{ $book->description }}</li>
+            <li>Stok: {{ $book->stock }}</li>
+            <li>Harga: Rp{{ number_format($book->price, 0, ',', '.') }}</li>
+            <li>Penulis: {{ $book->author->name }}</li>
+        </ul>
     @endforeach
-    
 </body>
 </html>

@@ -2,19 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Author</title>
+    <title>Authors</title>
 </head>
 <body>
-    <h1>Hello World</h1>
-    <p>Selamat Datang di toko BOOKSALES</p>
+    <h1>Daftar Penulis</h1>
 
-    @foreach ($authors as $item)
+    @foreach ($authors as $author)
+        <h3>{{ $author->name }}</h3>
         <ul>
-            <li>ID: {{ $item['id'] }}</li>
-            <li>Nama: {{ $item['name'] }}</li>
+            @foreach ($author->books as $book)
+                <li>{{ $book->title }}</li>
+            @endforeach
         </ul>
     @endforeach
-
 </body>
 </html>
