@@ -13,7 +13,9 @@ return new class extends Migration {
             $table->text('description');
             $table->integer('price');
             $table->integer('stock');
-            $table->foreignId('author_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('genre_id');
+            $table->unsignedBigInteger('author_id');
+            // $table->foreignId('author_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
