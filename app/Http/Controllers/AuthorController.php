@@ -2,51 +2,73 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Author;
+use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
     public function index()
     {
-        $authors = Author::all();
+        $author = Author::all();
+        return response()->json([
+            'success' => true,
+            'message' => 'All authors retrieved',
+            'data' => $author
+        ], 200);
+    }
 
-        if ($authors->isEmpty()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Resource Data Not Found',
-            ]);
+    public function show($id)
+    {
+        $author = Author::find($id);
+        if (!$author) {
+            return response()->json(['success' => false, 'message' => 'Author not found'], 404);
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Get All Resource',
-            'data' => $authors
+            'message' => 'Author retrieved',
+            'data' => $author
         ], 200);
     }
 
     public function store(Request $request)
     {
-        $validator = \Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+        $request->validate([
+            'name' => 'required|string'
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation Error',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        $author = Author::create([
-            'name' => $request->name,
-        ]);
+        $author = Author::create($request->all());
 
         return response()->json([
             'success' => true,
-            'message' => 'Author Created Successfully',
+            'message' => 'Author created',
             'data' => $author
         ], 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $author = Author::find($id);
+        if (!$author) {
+            return response()->json(['success' => false, 'message' => 'Author not found'], 404);
+        }
+
+        $author->update($request->all());
+        return response()->json([
+            'success' => true,
+            'message' => 'Author updated',
+            'data' => $author
+        ], 200);
+    }
+
+    public function destroy($id)
+    {
+        $author = Author::find($id);
+        if (!$author) {
+            return response()->json(['success' => false, 'message' => 'Author not found'], 404);
+        }
+
+        $author->delete();
+        return response()->json(['success' => true, 'message' => 'Author deleted'], 200);
     }
 }
